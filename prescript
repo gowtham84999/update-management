@@ -1,0 +1,14 @@
+$size=(Get-Volume -DriveLetter C).SizeRemaining/1GB
+echo $size
+# checking free space of c drive is more than 4GB
+if ($size -gt 4)
+{
+Write-Output "Remaining size is more than 4GB"
+get-hotfix | sort-object InstalledOn | export-csv -path C:\hotfixPatching\$($env:COMPUTERNAME)_$(get-date -f yyyyMMddhhmm)_hotfix.csv
+get-service | export-csv -path C:\hotfixPatching\$($env:COMPUTERNAME)_$(get-date -f yyyyMMddhhmm)_services.csv
+
+}
+else
+{
+Write-Output "Remaining size is not more than 4GB"
+}
